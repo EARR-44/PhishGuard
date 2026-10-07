@@ -147,7 +147,7 @@ function readEmail() {
                                                 detection.details
                                                 ? `
                                                     <br>
-                                                    <small>
+                                                    <small class="redacted" tabindex="0" aria-label="Detalle del indicador; enfoque o pase el cursor para revelar">
                                                         ${escapeHtml(detection.details).replace(/\n/g, "<br>")}
                                                     </small>
                                                 `
