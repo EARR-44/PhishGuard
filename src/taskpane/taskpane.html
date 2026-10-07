@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PhishGuard</title>
+    <link rel="stylesheet" href="taskpane.css">
+
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🛡️ PhishGuard</h1>
+
+        <p class="subtitle">
+            Analizador de correos sospechosos
+        </p>
+
+        <button id="analyzeButton">
+            🔍 Analizar correo
+        </button>
+
+        <div id="result">
+            <p>Esperando análisis...</p>
+        </div>
+        <button id="reportButton" style="display: none;">
+    🚨 Reportar phishing
+</button>
+
+    </div>
+
+    <script src="taskpane.js"></script>
+
+</body>
+</html>
