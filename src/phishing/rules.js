@@ -1,7 +1,7 @@
 export const phishingRules = [
-
     {
         name: "Solicitud de contraseña",
+        category: "content",
         patterns: [
             /ingrese\s+(su\s+)?contraseña/i,
             /introduzca\s+(su\s+)?contraseña/i,
@@ -12,9 +12,9 @@ export const phishingRules = [
         score: 30,
         severity: "alta"
     },
-
     {
         name: "Cuenta bloqueada o suspendida",
+        category: "content",
         patterns: [
             /cuenta\s+(será\s+)?bloqueada/i,
             /cuenta\s+suspendida/i,
@@ -24,9 +24,9 @@ export const phishingRules = [
         score: 20,
         severity: "alta"
     },
-
     {
         name: "Lenguaje de urgencia",
+        category: "content",
         patterns: [
             /urgente/i,
             /inmediatamente/i,
@@ -38,9 +38,9 @@ export const phishingRules = [
         score: 15,
         severity: "media"
     },
-
     {
         name: "Solicitud de verificación",
+        category: "content",
         patterns: [
             /verifique\s+(su\s+)?cuenta/i,
             /confirme\s+(su\s+)?identidad/i,
@@ -50,9 +50,9 @@ export const phishingRules = [
         score: 15,
         severity: "media"
     },
-
     {
         name: "Solicitud de credenciales",
+        category: "content",
         patterns: [
             /nombre\s+de\s+usuario/i,
             /usuario\s+y\s+contraseña/i,
@@ -62,9 +62,9 @@ export const phishingRules = [
         score: 25,
         severity: "alta"
     },
-
     {
         name: "Lenguaje de amenaza",
+        category: "content",
         patterns: [
             /perderá\s+el\s+acceso/i,
             /se\s+eliminará\s+su\s+cuenta/i,
@@ -73,6 +73,18 @@ export const phishingRules = [
         ],
         score: 20,
         severity: "alta"
+    },
+    {
+        name: "Business Email Compromise",
+        category: "content",
+        patterns: [
+            /(transferencia|pago|factura|cuenta bancaria).*(urgente|inmediato|hoy|ahora)/i,
+            /(cambio de cuenta bancaria|nueva cuenta bancaria|modificación de datos bancarios|datos bancarios).*(pago|transferencia|factura|urgente)/i,
+            /(no llamar|no responder|fuera de la oficina|confidencial).*(transferencia|cuenta|pago|factura)/i,
+            /(tarjetas de regalo|gift cards|gift card).*(urgente|inmediato|pago|entrega)/i,
+            /(transferencia urgente|pago inmediato|factura modificada|datos bancarios confidenciales)/i
+        ],
+        score: 35,
+        severity: "alta"
     }
-
 ];

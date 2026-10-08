@@ -1,66 +1,70 @@
-export function analyzeLinks(html) {
+import { normalizeHostname, normalizeUrl } from "./urlNormalizer";
 
+export function analyzeLinks(html) {
     const detections = [];
     let score = 0;
 
-    // Crear un documento temporal para analizar el HTML
-    const parser = new DOMParser();
-    const document = parser.parseFromString(html, "text/html");
+    if (!html) {
+        return {
+            category: "link",
+            score: 0,
+            detections: []
+        };
+    }
 
-    const links = document.querySelectorAll("a");
+    const parser = typeof DOMParser !== "undefined" ? new DOMParser() : null;
+    const document = parser ? parser.parseFromString(html, "text/html") : null;
+    const links = document ? document.querySelectorAll("a") : [];
 
-    links.forEach(link => {
-
-        const visibleText = (link.textContent || "").trim();
+    for (const link of links) {
         const href = link.getAttribute("href");
 
         if (!href) {
-            return;
+            continue;
         }
+
+        const visibleText = (link.textContent || "").trim();
 
         try {
+            const destination = new URL(href, "https://example.com/");
+            const destinationHost = normalizeHostname(destination.hostname);
 
-            const destination = new URL(href, window.location.href);
-
-            const destinationHost = destination.hostname.toLowerCase();
-
-            // Buscar URLs escritas como texto
-            const visibleUrlMatch = visibleText.match(
-                /https?:\/\/[^\s<>"']+/i
-            );
-
-            if (visibleUrlMatch) {
-
-                const visibleUrl = visibleUrlMatch[0];
-
-                const visibleDestination = new URL(visibleUrl);
-
-                const visibleHost =
-                    visibleDestination.hostname.toLowerCase();
-
-                // Comparar dominio visible contra dominio real
-                if (visibleHost !== destinationHost) {
-
-                    detections.push({
-                        type: "Enlace engañoso",
-                        url: href,
-                        score: 35,
-                        details:
-                            `El enlace muestra ${visibleHost} pero dirige a ${destinationHost}`
-                    });
-
-                    score += 35;
-                }
+            if (!visibleText) {
+                continue;
             }
 
-        } catch (error) {
+            const visibleUrlMatch = visibleText.match(/https?:\/\/[^\s<>"']+/i);
+            if (!visibleUrlMatch) {
+                continue;
+            }
 
-            // Ignorar enlaces que no sean URLs válidas
+            const visibleUrl = visibleUrlMatch[0];
+            const visibleDestination = new URL(visibleUrl);
+            const visibleHost = normalizeHostname(visibleDestination.hostname);
+
+            if (visibleHost === destinationHost || visibleHost === `www.${destinationHost}` || `www.${visibleHost}` === destinationHost) {
+                continue;
+            }
+
+            const detectionScore = 35;
+            detections.push({
+                type: "Enlace engañoso",
+                category: "link",
+                url: normalizeUrl(href) || href,
+                score: detectionScore,
+                details: `El enlace muestra ${visibleHost} pero dirige a ${destinationHost}`,
+                severity: "alta"
+            });
+
+            score += detectionScore;
         }
-
-    });
+        catch (error) {
+            continue;
+        }
+    }
 
     return {
+        category: "link",
         score: Math.min(score, 50),
         detections
     };
