@@ -2,15 +2,15 @@
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="MailApp">
   <Id>dcff9007-771b-4b8f-8b7e-d0db4b48b62e</Id>
   <Version>1.0.0.1</Version>
-  <ProviderName>Contoso</ProviderName>
-  <DefaultLocale>en-US</DefaultLocale>
+  <ProviderName>CBP Financia Capital Factoring S.A</ProviderName>
+  <DefaultLocale>es-CL</DefaultLocale>
   <DisplayName DefaultValue="PhishGuard"/>
-  <Description DefaultValue="A template to get started."/>
+  <Description DefaultValue="Analizador de phishing para correos de Outlook."/>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-128.png"/>
-  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
+  <SupportUrl DefaultValue="https://localhost:3000/taskpane.html"/>
   <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
+    <AppDomain>https://localhost:3000</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Mailbox"/>
@@ -94,13 +94,13 @@
         <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="GroupLabel" DefaultValue="Contoso Add-in"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Task Pane"/>
-        <bt:String id="ActionButton.Label" DefaultValue="Perform an action"/>
+        <bt:String id="GroupLabel" DefaultValue="PhishGuard"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Abrir panel"/>
+        <bt:String id="ActionButton.Label" DefaultValue="Analizar correo"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>
-        <bt:String id="ActionButton.Tooltip" DefaultValue="Perform an action when clicked."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Abre el panel del analizador de phishing."/>
+        <bt:String id="ActionButton.Tooltip" DefaultValue="Analiza el correo actual en busca de indicadores de phishing."/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

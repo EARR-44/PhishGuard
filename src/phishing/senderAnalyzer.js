@@ -1,39 +1,33 @@
 export function analyzeSender(sender, subject, body) {
-
     const detections = [];
     let score = 0;
 
     if (!sender) {
         return {
+            category: "sender",
             score: 0,
             detections: []
         };
     }
 
     const email = sender.toLowerCase().trim();
-
-    // Extraer dominio del correo
     const parts = email.split("@");
 
     if (parts.length !== 2) {
         return {
+            category: "sender",
             score: 15,
-            detections: [
-                {
-                    type: "Remitente con formato sospechoso",
-                    score: 15,
-                    details: email
-                }
-            ]
+            detections: [{
+                type: "Remitente con formato sospechoso",
+                category: "sender",
+                score: 15,
+                details: email,
+                severity: "media"
+            }]
         };
     }
 
     const domain = parts[1];
-
-    /*
-     * Dominios frecuentemente utilizados para cuentas
-     * temporales o sospechosas.
-     */
     const suspiciousDomains = [
         "mailinator.com",
         "tempmail.com",
@@ -42,20 +36,17 @@ export function analyzeSender(sender, subject, body) {
     ];
 
     if (suspiciousDomains.includes(domain)) {
-
         detections.push({
             type: "Remitente de dominio temporal",
+            category: "sender",
             score: 25,
-            details: domain
+            details: domain,
+            severity: "alta"
         });
-
         score += 25;
     }
 
-    /*
-     * Detectar dominios que contienen palabras relacionadas
-     * con seguridad, soporte, login, etc.
-     */
+    const combinedText = `${subject || ""} ${body || ""}`.toLowerCase();
     const suspiciousWords = [
         "secure",
         "security",
@@ -67,23 +58,20 @@ export function analyzeSender(sender, subject, body) {
         "update"
     ];
 
-    for (const word of suspiciousWords) {
-
-        if (domain.includes(word)) {
-
-            detections.push({
-                type: "Dominio del remitente potencialmente sospechoso",
-                score: 15,
-                details: domain
-            });
-
-            score += 15;
-
-            break;
-        }
+    const suspiciousWordMatches = suspiciousWords.filter((word) => domain.includes(word));
+    if (suspiciousWordMatches.length > 0 && /credential|password|contraseña|verifique|actualice|cuenta|seguridad/i.test(combinedText)) {
+        detections.push({
+            type: "Dominio del remitente potencialmente sospechoso",
+            category: "sender",
+            score: 15,
+            details: domain,
+            severity: "media"
+        });
+        score += 15;
     }
 
     return {
+        category: "sender",
         score: Math.min(score, 30),
         detections
     };

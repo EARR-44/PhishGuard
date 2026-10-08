@@ -2,6 +2,8 @@ import { analyzeEmail as analyzePhishing } from "../phishing/analyzer";
 
 /* global Office */
 
+const REPORT_RECIPIENT = "soporte.ti@financiacapital.cl";
+
 let lastAnalysis = null;
 let lastEmail = null;
 let lastResultHtml = null;
@@ -270,7 +272,7 @@ function confirmReport() {
         }
 
         Office.context.mailbox.displayNewMessageForm({
-            toRecipients: ["erobles@financiacapital.cl"],
+            toRecipients: [REPORT_RECIPIENT],
             subject,
             htmlBody
         });
