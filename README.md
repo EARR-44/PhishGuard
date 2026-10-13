@@ -31,7 +31,7 @@ Los umbrales son reglas heurísticas del proyecto y pueden cambiar a medida que 
 
 ## Reportar un posible phishing
 
-Cuando la puntuación alcanza el umbral configurado, aparece **Reportar phishing**. Al confirmar, PhishGuard prepara un borrador de Outlook dirigido a `erobles@financiacapital.cl` con:
+Cuando la puntuación alcanza el umbral configurado, aparece **Reportar phishing**. Al confirmar, PhishGuard prepara un borrador de Outlook dirigido a `correo@correo.cl` con:
 
 - El remitente y el asunto originales.
 - La fecha de generación del reporte.
